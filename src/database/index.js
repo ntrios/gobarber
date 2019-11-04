@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize'; // responsável pela comunicação com o BD
+import mongoose from 'mongoose';
 
 import User from '../app/models/User';
 import File from '../app/models/File';
@@ -11,6 +12,7 @@ const models = [User, File, Appointment];
 class Database {
   constructor() {
     this.init();
+    this.mongo();
   }
 
   init() {
@@ -19,6 +21,13 @@ class Database {
     models
       .map(model => model.init(this.connection))
       .map(model => model.associate && model.associate(this.connection.models)); // chama o método se ele existir [models]
+  }
+
+  mongo() {
+    this.mongoConnection = mongoose.connect(
+      'mongodb://localhost:27017/gorbarber',
+      { useNewUrlParser: true, useFindAndModify: true }
+    );
   }
 }
 
