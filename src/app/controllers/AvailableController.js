@@ -45,13 +45,11 @@ class AvailableController {
     ];
 
     const avaiable = schedule.map(time => {
-      const { hour, minute } = time.split(':');
+      const [hour, minute] = time.split(':');
       const value = setSeconds(
         setMinutes(setHours(searchDate, hour), minute),
         0
       );
-      console.log('HERE: ', value);
-      console.log('HERE: ', format(value, "yyyy-MM-dd'T'HH:mm:ssxxx"));
 
       return {
         time,
