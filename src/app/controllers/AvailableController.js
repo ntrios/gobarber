@@ -5,6 +5,7 @@ import {
   setMinutes,
   setSeconds,
   format,
+  isAfter,
 } from 'date-fns';
 import { Op } from 'sequelize';
 import Appointment from '../models/Appointment';
@@ -19,7 +20,7 @@ class AvailableController {
 
     const searchDate = Number(date);
 
-    const appointments = await Appointment.findAll({
+    const appointments = await Appointment.finddAll({
       where: {
         provider_id: req.params.providerId,
         canceled_at: null,
@@ -54,6 +55,9 @@ class AvailableController {
       return {
         time,
         value: format(value, "yyyy-MM-dd'T'HH:mm:ssxxx"),
+        available:
+          isAfter(value, new Date()) &&
+          !appointments.find(a => format(a.date, 'HH:mm') === time),
       };
     });
 
