@@ -59,7 +59,7 @@ class AppointmentController {
     if (!isProvider) {
       return res
         .status(401)
-        .json({ errp: 'You can only create appointments with providers' });
+        .json({ erro: 'You can only create appointments with providers' });
     }
 
     // check for past dates
